@@ -18,7 +18,7 @@ SUBMIT_WAIT_TIME = 1            # 提交后等待确认的时间
 INITIAL_LOAD_WAIT = 2           # 初始加载后等待多久开始检查
 MAX_ELEMENT_WAIT = 30           # 等待关键元素出现的最大时间
 OCR_RETRY_WAIT_TIME = 5         # OCR识别失败后的额外等待时间
-CONTRIBUTOR_NAME = "liyifan202201" # 贡献者名称
+CONTRIBUTOR_NAME = "" 
 # --- 配置 ---
 
 # --- Rich Console 实例 (自动适应终端大小) ---
@@ -99,19 +99,14 @@ def handle_captcha(driver):
 
         start_check_time = time.time()
         while time.time() - start_check_time < MAX_ELEMENT_WAIT:
-            # 检查一个关键的、较早出现的元素，如导航栏中的链接
-            # 注意：原始HTML片段显示的元素可能不完全准确，这里沿用之前的逻辑
-            # 如果发现始终超时，可能需要调整此XPath
             if is_element_present(By.XPATH, '//*[@id="navbarResponsive"]//a'):
                 console.log("[green][INIT][/green] 关键元素已加载，准备开始处理。", style="bold green")
-                # 不等待 driver.get 完全结束，因为我们已经可以操作了
                 break
             else:
                 console.log("[yellow][INIT][/yellow] ... 等待关键元素出现 ...", style="dim")
                 time.sleep(1)
         else:
             console.log(f"[red][INIT][/red] 致命错误：等待关键元素超时 ({MAX_ELEMENT_WAIT}s)。", style="bold red")
-            # 可以选择在此处返回或抛出异常
             return # 或 raise Exception("页面加载超时")
 
     console.print(Panel("[bold green]页面加载检查通过，进入主循环...[/bold green]", title="主循环开始", expand=False))
@@ -132,7 +127,7 @@ def handle_captcha(driver):
                         break
                 except:
                     pass
-                if attempt < 4: # 避免最后一次不必要的日志
+                if attempt < 4: 
                     console.log(f"[yellow][CAPTCHA][/yellow] 等待验证码图片加载 (尝试 {attempt + 1}/5)...", style="dim")
                 time.sleep(1)
 
@@ -146,9 +141,9 @@ def handle_captcha(driver):
             # 简化日志输出
             # console.log(f"[cyan][CAPTCHA][/cyan] 图片src: {img_src}")
 
-            # 检查图片是否有效加载 (检查 src 是否不是占位符)
+            # 检查图片是否有效加载
             if not img_src or img_src.endswith("#") or img_src in ("data:,", ","):
-                console.log("[yellow][CAPTCHA][/yellow] 图片未加载 (src 是占位符)，刷新重试...", style="bold yellow")
+                console.log("[yellow][CAPTCHA][/yellow] 图片未加载，刷新重试...", style="bold yellow")
                 driver.refresh()
                 time.sleep(REFRESH_WAIT_TIME)
                 continue

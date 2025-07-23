@@ -164,8 +164,8 @@ def handle_captcha(driver):
 
             console.log(f"[magenta][OCR][/magenta] 处理后识别结果: [bold]{captcha_text}[/bold]")
 
-            if not captcha_text or len(captcha_text) != 5:
-                console.log(f"[red][OCR][/red] 识别失败或长度不合适 (!=5)，等待 {OCR_RETRY_WAIT_TIME}s 后刷新重试...", style="bold red")
+            if not captcha_text or len(captcha_text) != 4:
+                console.log(f"[red][OCR][/red] 识别失败或长度不合适 (!=4)，等待 {OCR_RETRY_WAIT_TIME}s 后刷新重试...", style="bold red")
                 # --- 关键修改：识别失败后增加等待时间 ---
                 time.sleep(OCR_RETRY_WAIT_TIME)
                 # -----------------------------------

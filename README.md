@@ -109,8 +109,10 @@ python main.py
 
 **liyifan202201**
 
+感谢 qwen3-coder(Debug) 和 chatgpt(编写Readme) 的辅助
+
 欢迎提出建议或 Issue！
 
 ---
 
-如果你需要我生成一份 `requirements.txt` 或打包为 `.exe` 的步骤，我也可以帮你写。需要吗？
+
